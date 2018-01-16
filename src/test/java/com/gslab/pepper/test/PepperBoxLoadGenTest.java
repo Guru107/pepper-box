@@ -1,19 +1,20 @@
 package com.gslab.pepper.test;
 
 import com.gslab.pepper.PepperBoxLoadGenerator;
-import com.gslab.pepper.util.PropsKeys;
-import kafka.admin.AdminUtils;
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServer;
-import kafka.utils.*;
+import kafka.utils.MockTime;
+import kafka.utils.TestUtils;
+import kafka.utils.ZKStringSerializer$;
+import kafka.utils.ZkUtils;
 import kafka.zk.EmbeddedZookeeper;
 import org.I0Itec.zkclient.ZkClient;
-import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.utils.Time;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,6 +56,7 @@ public class PepperBoxLoadGenTest {
         brokerProps.setProperty("broker.id", "0");
         brokerProps.setProperty("log.dirs", Files.createTempDirectory("kafka-").toAbsolutePath().toString());
         brokerProps.setProperty("listeners", "PLAINTEXT://" + BROKERHOST +":" + BROKERPORT);
+        brokerProps.setProperty("offsets.topic.replication.factor","1");
         KafkaConfig config = new KafkaConfig(brokerProps);
         Time mock = new MockTime();
         kafkaServer = TestUtils.createServer(config, mock);

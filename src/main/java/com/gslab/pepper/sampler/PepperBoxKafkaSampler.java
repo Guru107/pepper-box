@@ -1,10 +1,10 @@
 
 package com.gslab.pepper.sampler;
 
-import com.eclipsesource.json.*;
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
 import com.gslab.pepper.util.ProducerKeys;
 import com.gslab.pepper.util.PropsKeys;
-import kafka.cluster.Broker;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
@@ -15,7 +15,7 @@ import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.protocol.SecurityProtocol;
+import org.apache.kafka.common.security.auth.SecurityProtocol;
 import org.apache.log.Logger;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
@@ -204,7 +204,7 @@ public class PepperBoxKafkaSampler extends AbstractJavaSamplerClient {
 
         } else {
 
-            return  context.getParameter(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG);
+            return context.getParameter(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG);
 
         }
     }
